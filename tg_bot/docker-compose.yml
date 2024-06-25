@@ -1,0 +1,25 @@
+version: '3'
+
+
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    user: app-user
+    env_file:
+      - conf/.env
+
+    ports:
+      - "8005:8005"
+    command: scripts/web/startup.sh -m -l
+    restart: on-failure
+
+    volumes:
+      - .:/code
+    networks:
+      - travel_network
+
+networks:
+  travel_network:
+    external: True
